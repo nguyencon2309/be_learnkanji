@@ -26,7 +26,7 @@ router.get('/listaccount',siteController.listaccount)
 const lessonController = require("../app/controllers/LessonControllers")
 router.get('/listlesson',lessonController.listlesson)
 
-//compound
+//compound//
 router.post('/compound/create',accountController.requiresLogin,accountController.isAdmin,compoundController.create)
 router.post('/compound/update',accountController.requiresLogin,accountController.isAdmin,compoundController.update)
 router.post('/compound/delete',accountController.requiresLogin,accountController.isAdmin,compoundController.delete)
