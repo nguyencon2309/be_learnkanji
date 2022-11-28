@@ -23,7 +23,8 @@ router.get('/search',kanjiController.search)
 router.get('/listkanji',kanjiController.listkanji)
 //just admin
 router.get('/listaccount',siteController.listaccount)
-
+const lessonController = require("../app/controllers/LessonControllers")
+router.get('/listlesson',lessonController.listlesson)
 
 //compound
 router.post('/compound/create',accountController.requiresLogin,accountController.isAdmin,compoundController.create)
@@ -42,14 +43,18 @@ const upload = multer({
     
 })
 
-/*const tf = require("@tensorflow/tfjs");
+const tf = require("@tensorflow/tfjs");
 const tfn = require("@tensorflow/tfjs-node");
 const handler = tfn.io.fileSystem('src/app/controllers/model/model.json');
 // C:
 
 const KANJI_CLASSES = require('./kanjiclass.js')
-const TOP_K = 5
-
+const TOP_K = 5;
+let model;
+async function LoadModel() {
+     model = await tf.loadLayersModel(handler);
+}
+LoadModel()
 const {createCanvas,loadImage} = require('canvas');
 function convertImageToCanvas(image) {
     var canvas = document.createElement("canvas");
@@ -75,11 +80,11 @@ function getTopK(predictions, k){
 // async model()=>{
 //     return  await tf.loadLayersModel(handler);
 // }
-*/
+
 router.post('/detect',upload.single('file'), async(req,res)=>{
-    console.log(req.file)
-    res.json("upload successfully")
-      /*let model = await tf.loadLayersModel(handler);
+    // console.log(req.file)
+    //res.json("upload successfully")
+    // let model = await tf.loadLayersModel(handler);
         
         //console.log(model.summary());
         const img= await loadImage("src/routers/image/file.png")
@@ -100,7 +105,7 @@ router.post('/detect',upload.single('file'), async(req,res)=>{
         let top_k = getTopK(predictions, TOP_K);
         // console.log(top_k);
 
-        res.json({top_k});*/
+        res.json({top_k});
 
     
 })
