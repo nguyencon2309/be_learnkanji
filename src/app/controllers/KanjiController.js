@@ -39,9 +39,10 @@ class KanjiController{
                 else{
                     let c=b*k
                     c=Math.min(c,l)
-                    const slicedArray = kanjitext.slice((b-1)*40, c);
+                    const slicedArray = kanjitext.slice((b-1)*70, c);
+                    let lc=slicedArray.length
                     res.json({
-                        "kanjis":slicedArray
+                        "kanjis":slicedArray,"len":lc
                     });
                 }
             }
