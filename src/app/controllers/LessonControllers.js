@@ -1,6 +1,7 @@
 const Lesson=require("../models/lesson")
 class LessonControllers{
     //[get] new
+    //
     listlesson(req,res,next){
         Lesson.find({
             
