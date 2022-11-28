@@ -41,7 +41,7 @@ class KanjiController{
                     const slicedArray = kanjitext.slice((b-1)*70, c);
                     let lc=slicedArray.length
                     res.json({
-                        "kanjis":slicedArray,"len":lc
+                        "level":a,"kanjis":slicedArray,"len":lc
                     });
                 }
             }

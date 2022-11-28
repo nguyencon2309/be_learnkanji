@@ -32,7 +32,15 @@ router.post('/compound/update',accountController.requiresLogin,accountController
 router.post('/compound/delete',accountController.requiresLogin,accountController.isAdmin,compoundController.delete)
 const multer= require("multer")
 const path=require("path")
+//storage detect 
 const storage = multer.diskStorage({
+    destination: './src/routers/image',
+    filename: (req, file, cb) => {
+        return cb(null, `${file.fieldname}${path.extname(file.originalname)}`)
+    }
+})
+//so sánh
+const storage1 = multer.diskStorage({
     destination: './src/routers/image',
     filename: (req, file, cb) => {
         return cb(null, `${file.fieldname}${path.extname(file.originalname)}`)
@@ -40,6 +48,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({
     storage: storage,
+    storage:storage1,
     
 })
 
@@ -106,6 +115,52 @@ router.post('/detect',upload.single('file'), async(req,res)=>{
         // console.log(top_k);
 
         res.json({top_k});
+
+    
+})
+//danh gia   㰡
+
+router.post('/evaluate',upload.single('eval'), async(req,res)=>{
+    let a=req.body.kanji//get kanji
+    let st=-1
+    let s=" Sorry Kanji "+a+" not found !!!"
+    let d=0
+    //kiểm tra kanji có tồn tại trong kanji_class ko
+    for(let i=0;i<3036;i++){
+        d+=1
+        if (a==KANJI_CLASSES[i]){
+         st=i;//nếu có thoát tiếp
+         break
+        }
+
+    }
+    
+    if (st==-1){
+        res.json(s)
+        return;
+    }
+    
+        const img= await loadImage("src/routers/image/eval.png")
+           
+        const canvas = createCanvas(150,150);
+        const ctx = canvas.getContext("2d")
+        ctx.drawImage(img,0,0)
+        
+
+        let tensor = tf.browser.fromPixels(canvas)
+	    .resizeNearestNeighbor([96, 96])
+	    .expandDims()
+	    .toFloat();
+        tensor = tensor.div(255.);
+       
+        let predictions = await model.predict(tensor).dataSync();
+      
+       
+        let tt=0
+        res.json({"kanji":KANJI_CLASSES[st],"correct_ratio":predictions[st]})
+        
+       
+        
 
     
 })
