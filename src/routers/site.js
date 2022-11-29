@@ -11,7 +11,7 @@ router.get('/detail/:id',kanjiController.detail_id)
 router.get('/upppp',compoundController.uppd)
 
 router.get('/listlesson',siteController.listlesson)
-router.get('/lesson/:level/:page',kanjiController.lesson)
+router.get('/lesson/:level',kanjiController.lesson)
 router.post('/login',accountController.login)
 router.post('/logout',accountController.logout)
 router.post('/signin',accountController.signin)
