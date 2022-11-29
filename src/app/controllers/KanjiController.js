@@ -26,6 +26,9 @@ class KanjiController{
     lesson(req,res,next){
         let a=req.params.level
         let b=req.params.page
+        let t1="left"
+        let t2="right"
+        let t3="both"
         Kanjitext.find({
            level:a 
         },{ _id:0,kanji:1,vocabulary:1,mean:1,id:1},function(err,kanjitext){
@@ -36,12 +39,17 @@ class KanjiController{
                     res.json("Data not found!!!")
                 }
                 else{
+                    let sta;
+                    if(b==1) sta=t2
+                    else if(b==b1) sta=t1
+                    else sta=t3
                     let c=b*70
                     c=Math.min(c,l)
                     const slicedArray = kanjitext.slice((b-1)*70, c);
                     let lc=slicedArray.length
                     res.json({
-                        "level":a,"kanjis":slicedArray,"len":lc
+
+                        "status":sta,"level":a,"kanjis":slicedArray,"len":lc
                     });
                 }
             }
