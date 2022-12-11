@@ -129,16 +129,14 @@ router.post('/evaluate',upload.single('eval'), async(req,res)=>{
     for(let i=0;i<3036;i++){
         d+=1
         if (a==KANJI_CLASSES[i]){
-         st=i;//nếu có thoát tiếp
+         st=i;
+         //nếu có thoát tiếp
+         s=a
          break
         }
 
     }
-    
-    if (st==-1){
-        res.json(s)
-        return;
-    }
+   
     
         const img= await loadImage("src/routers/image/eval.png")
            
@@ -154,10 +152,10 @@ router.post('/evaluate',upload.single('eval'), async(req,res)=>{
         tensor = tensor.div(255.);
        
         let predictions = await model.predict(tensor).dataSync();
-      
-       
+        let top_k = getTopK(predictions, TOP_K);
+        let cr=st==-1?"kanji ko tim thay":predictions[st]
         let tt=0
-        res.json({"kanji":KANJI_CLASSES[st],"correct_ratio":predictions[st]})
+        res.json({"kanji":a,"correct_ratio":cr,"top_k":top_k})
         
        
         
