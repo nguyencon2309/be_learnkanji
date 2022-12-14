@@ -91,15 +91,15 @@ function getTopK(predictions, k){
 // }
 
 router.post('/detect',upload.single('file'), async(req,res)=>{
-    // console.log(req.file)
+    console.log(req.file.path)
     //res.json("upload successfully")
     // let model = await tf.loadLayersModel(handler);
         
         //console.log(model.summary());
-        const img= await loadImage("src/routers/image/file.png")
+        const img= await loadImage(req.file.path)
            
         const canvas = createCanvas(150,150);
-        const ctx = canvas.getContext("2d")
+        const ctx = canvas.getContext("2d");
         ctx.drawImage(img,0,0)
         // console.log(ctx)
        
@@ -119,8 +119,11 @@ router.post('/detect',upload.single('file'), async(req,res)=>{
     
 })
 //danh gia   㰡
+var fs = require('fs');
 
 router.post('/evaluate',upload.single('eval'), async(req,res)=>{
+    
+    // console.log(req.file)
     let a=req.body.kanji//get kanji
     let st=-1
     let s=" Sorry Kanji "+a+" not found !!!"
@@ -138,7 +141,7 @@ router.post('/evaluate',upload.single('eval'), async(req,res)=>{
     }
    
     
-        const img= await loadImage("src/routers/image/eval.png")
+        const img= await loadImage(req.file.path)
            
         const canvas = createCanvas(150,150);
         const ctx = canvas.getContext("2d")
@@ -158,7 +161,10 @@ router.post('/evaluate',upload.single('eval'), async(req,res)=>{
         res.json({"kanji":a,"correct_ratio":cr,"top_k":top_k})
         
        
-        
+        fs.unlink(req.file.path, function (err) {
+            if (err) throw err;
+            //console.log('File deleted!');
+          });
 
     
 })

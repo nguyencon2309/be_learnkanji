@@ -2,7 +2,7 @@
 // const require = createRequire(import.meta.url);
 
 
-const val = require('morgan')
+//const val = require('morgan')
 const {route} = require("./routers")
 // const accountController= require('./app/controllers/AccountController')
 const express = require("express")
@@ -22,7 +22,7 @@ app.engine('html', require('ejs').renderFile);
 app.listen(process.env.PORT || 3000,"0.0.0.0");
 const db=require('./app/config/db');
 db.connect()
-app.use(val('combined'))
+//app.use(val('combined'))
 
 
 
