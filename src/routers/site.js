@@ -20,7 +20,7 @@ router.post('/signin',accountController.signin)
 //router.get('/showtughep',kanjiControlle.show)
 router.get('/search',kanjiController.search)
 
-router.get('/listkanji',kanjiController.listkanji)
+//router.get('/listkanji',kanjiController.listkanji)
 //just admin
 router.get('/listaccount',siteController.listaccount)
 const lessonController = require("../app/controllers/LessonControllers")
@@ -89,9 +89,9 @@ function getTopK(predictions, k){
 // async model()=>{
 //     return  await tf.loadLayersModel(handler);
 // }
-
+var fs = require('fs');
 router.post('/detect',upload.single('file'), async(req,res)=>{
-    console.log(req.file.path)
+    //console.log(req.file)
     //res.json("upload successfully")
     // let model = await tf.loadLayersModel(handler);
         
@@ -113,13 +113,17 @@ router.post('/detect',upload.single('file'), async(req,res)=>{
         // console.log(predictions);
         let top_k = getTopK(predictions, TOP_K);
         // console.log(top_k);
-
+        console.log(top_k)
         res.json({top_k});
+        // fs.unlink(req.file.path, function (err) {
+        //     if (err) throw err;
+        //     //console.log('File deleted!');
+        //   });
 
     
 })
 //danh gia   㰡
-var fs = require('fs');
+
 
 router.post('/evaluate',upload.single('eval'), async(req,res)=>{
     

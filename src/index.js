@@ -19,7 +19,7 @@ app.set('view engine', 'html');
 
 app.engine('html', require('ejs').renderFile);
 
-app.listen(process.env.PORT || 3000,"0.0.0.0");
+app.listen(process.env.PORT || 3005,"0.0.0.0");
 const db=require('./app/config/db');
 db.connect()
 //app.use(val('combined'))
