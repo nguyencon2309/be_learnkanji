@@ -30,6 +30,14 @@ router.get('/listlesson',lessonController.listlesson)
 router.post('/compound/create',accountController.requiresLogin,accountController.isAdmin,compoundController.create)
 router.post('/compound/update',accountController.requiresLogin,accountController.isAdmin,compoundController.update)
 router.post('/compound/delete',accountController.requiresLogin,accountController.isAdmin,compoundController.delete)
+
+
+
+
+//comment luc 20/12/2023
+//comment truoc khi thi lap trinh android
+/*
+
 const multer= require("multer")
 const path=require("path")
 //storage detect 
@@ -172,5 +180,10 @@ router.post('/evaluate',upload.single('eval'), async(req,res)=>{
 
     
 })
+
+
+
+
+*/
 
 module.exports=router;

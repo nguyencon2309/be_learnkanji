@@ -52,15 +52,10 @@ class KanjiController{
            level:a 
         },{ _id:0,kanji:1,vocabulary:1,mean:1,id:1},function(err,kanjitext){
             if (!err){
-                    
-                    res.json({
-
-                        "level":a,"kanjis":kanjitext
-                    });
-                
+                   
+                res.json(kanjitext)
             }
             else{
-                res.status(400).json({error:'ERROR'});
                 return ;
             }
         })
